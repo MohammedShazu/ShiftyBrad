@@ -12,9 +12,12 @@ public class Enemybehave : MonoBehaviour
     public Transform Target;
     public bool detectsthief = false;
     public bool captured = false;
-    public GameObject player;
+    public GameObject Player;
     public float speed = 1;
-
+    //call detection script
+    public Detection script;
+    bool chasePlayer;
+   
 
     private void Update()
     {
@@ -26,6 +29,8 @@ public class Enemybehave : MonoBehaviour
                     if (detectsthief == true && captured == false)
                     {
                         myState = EnemyEnumState.chasing;
+                        // trigger bool needs to go here
+                        
                     }
                     //case 1 code goes here
                     break;
@@ -35,12 +40,18 @@ public class Enemybehave : MonoBehaviour
                     //chasing
                     if (detectsthief == false && captured == false)
                     {
+                        myState = EnemyEnumState.guarding;
+                    }
+                        if (detectsthief == true && captured == false)
+                    {
                         
-                        Vector3 targetDirection = player.transform.position - transform.position;
+                        Vector3 targetDirection = Player.transform.position - transform.position;
                         var step = speed * Time.deltaTime; // calculate distance to move
                         transform.position = Vector3.MoveTowards(transform.position, targetDirection, step);
                         myState = EnemyEnumState.guarding;
                     }
+
+               
                     //case 1 code goes here
                     if (detectsthief == true && captured == true)
                     {
@@ -61,7 +72,8 @@ public class Enemybehave : MonoBehaviour
                     break;
                 }
 
-        }
+                
+}
 
     }
     // Start is called before the first frame update

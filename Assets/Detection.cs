@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class Detection : MonoBehaviour
 {
-    bool thiefInRadar;
-    GameObject player;
+    bool thiefInRadar = false;
+    public bool Triggered = false;
+    //public GameObject player;
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TRIGGER");
+        if (other.tag == "Player")
+        {
+            Debug.Log("TRIGGER");
+            Triggered = true;
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("exit");
+        if (other.tag == "Player")
+        {
+            Debug.Log("exit");
+            Triggered = false;
+        }
     }
 
     private void Start()
