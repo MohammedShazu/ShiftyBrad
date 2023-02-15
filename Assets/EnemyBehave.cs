@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Enemybehave : MonoBehaviour
+public class EnemyBehave : MonoBehaviour
 {
 
-    public enum EnemyEnumState { guarding, chasing, captured }
+    public enum EnemyEnumState { guarding, chasing, captured } //declaring all states that a guard can do
     public EnemyEnumState myState = EnemyEnumState.guarding;
 
-    //can't detect thief normally
+    //can't detect thief normally, so captured and detects thief is defaulted a false 
     public Transform Target;
     public bool detectsthief = false;
     public bool captured = false;
@@ -17,8 +18,18 @@ public class Enemybehave : MonoBehaviour
     //call detection script
     public Detection script;
     bool chasePlayer;
-   
+    private Detection TriggeredCheck; //referring to the Detection script in order for me to be able to access the boolean
+    public GameObject boolTracker;
+    public Detection volumeToMonitor; //added on for enemy chasing part
 
+    private void Start()
+    {
+        Player = GameObject.FindGameObjectWithTag("Player");
+        volumeToMonitor = GameObject.FindGameObjectWithTag("Detection").GetComponent<Detection>();
+
+        // myScript = GetComponent<Detection>();
+        TriggeredCheck = boolTracker.GetComponent<Detection>();
+    }
     private void Update()
     {
         switch (myState)
@@ -26,11 +37,17 @@ public class Enemybehave : MonoBehaviour
             case EnemyEnumState.guarding:
                 //guarding
                 {
+                    Debug.Log("Triggered bool read");//added this line a few more times to figure out where I was supposed to put this
+
                     if (detectsthief == true && captured == false)
                     {
-                        myState = EnemyEnumState.chasing;
-                        // trigger bool needs to go here
-                        
+
+
+                        if (TriggeredCheck.Triggered) {
+                            
+                            myState = EnemyEnumState.chasing;
+                            // trigger bool needs to go here
+                        }
                     }
                     //case 1 code goes here
                     break;
@@ -42,25 +59,28 @@ public class Enemybehave : MonoBehaviour
                     {
                         myState = EnemyEnumState.guarding;
                     }
-                        if (detectsthief == true && captured == false)
+                    if (detectsthief == true && captured == false)
                     {
-                        
-                        Vector3 targetDirection = Player.transform.position - transform.position;
-                        var step = speed * Time.deltaTime; // calculate distance to move
-                        transform.position = Vector3.MoveTowards(transform.position, targetDirection, step);
-                        myState = EnemyEnumState.guarding;
+                        //set eyes on the player
+                        transform.LookAt(Player.transform.position);
+                        //start chasing the player
+                        transform.Translate(Vector3.forward * speed * Time.deltaTime);
                     }
-
-               
-                    //case 1 code goes here
-                    if (detectsthief == true && captured == true)
+                    //checking to see if enemy is close enough to get captured
+                    if (Vector3.Distance(Player.transform.position, transform.position) > 2.0f)
                     {
                         myState = EnemyEnumState.captured;
+                    }
+                     
+                      //checking to see if player is in enemy's radar, if not then it'll go back to guarding
+                      if (volumeToMonitor.Triggered == false)
+                    {
+                        myState = EnemyEnumState.guarding;
                     }
                     break;
                 }
             case EnemyEnumState.captured:
-                //caprured
+                //captured
                 {
                     Debug.Log("Game Over!!!!");
                     break;
@@ -71,10 +91,7 @@ public class Enemybehave : MonoBehaviour
                 {
                     break;
                 }
-
-                
-}
+        }
 
     }
-    // Start is called before the first frame update
 }

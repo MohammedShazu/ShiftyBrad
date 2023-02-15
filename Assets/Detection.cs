@@ -6,10 +6,12 @@ public class Detection : MonoBehaviour
 {
     bool thiefInRadar = false;
     public bool Triggered = false;
+    
     //public GameObject player;
 
     private void OnTriggerEnter(Collider other)
     {
+        //if the player falls into the radar zone then it will print out trigger making "Triggered" = true
         if (other.tag == "Player")
         {
             Debug.Log("TRIGGER");
@@ -18,6 +20,7 @@ public class Detection : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        //It will print out false if player leaves that radar zone making "Triggered" false
         if (other.tag == "Player")
         {
             Debug.Log("exit");
