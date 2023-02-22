@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.3
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -114,7 +114,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.1
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1222834915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a38ca6d441a27ff4e94e722eff843786, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!195 &1222834918
@@ -447,6 +447,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1222834921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222834915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baeb9012b1fd7794383590faf0b2fb20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myState: 0
+  Target: {fileID: 0}
+  detectsthief: 0
+  captured: 0
+  Player: {fileID: 0}
+  speed: 1
+  script: {fileID: 0}
+  boolTracker: {fileID: 1280890441}
+  volumeToMonitor: {fileID: 0}
 --- !u!1001 &1233630580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -476,11 +497,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6631964419132099031, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.801
+      value: 0.89
       objectReference: {fileID: 0}
     - target: {fileID: 6631964419132099031, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.927572
+      value: -0.37
       objectReference: {fileID: 0}
     - target: {fileID: 6631964419132099031, guid: 35d11d1e1dd397942b5024ee78060e27, type: 3}
       propertyPath: m_LocalRotation.w
@@ -529,14 +550,13 @@ GameObject:
   - component: {fileID: 1259926431}
   - component: {fileID: 1259926430}
   - component: {fileID: 1259926429}
-  - component: {fileID: 1259926428}
   - component: {fileID: 1259926427}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!65 &1259926427
 BoxCollider:
@@ -551,22 +571,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 9.999999, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1259926428
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259926426}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!195 &1259926429
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -623,7 +627,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 749197eb2a1afbc4a8ead02781020e55, type: 2}
+  - {fileID: 2100000, guid: 234c71d1180eb6a49915e2a8b87a48d9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -697,8 +701,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1280890441}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.003343694, y: 0.43085027, z: 1.41}
-  m_LocalScale: {x: 0.8831869, y: 0.3292777, z: 2.767456}
+  m_LocalPosition: {x: 0.003343694, y: 0.43085027, z: 1.39}
+  m_LocalScale: {x: 1.5108591, y: 0.3292777, z: 3.9319215}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1222834916}

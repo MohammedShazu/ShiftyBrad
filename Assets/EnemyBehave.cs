@@ -25,7 +25,7 @@ public class EnemyBehave : MonoBehaviour
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        volumeToMonitor = GameObject.FindGameObjectWithTag("Detection").GetComponent<Detection>();
+        volumeToMonitor = GetComponent<Detection>();
 
         // myScript = GetComponent<Detection>();
         TriggeredCheck = boolTracker.GetComponent<Detection>();
@@ -41,20 +41,21 @@ public class EnemyBehave : MonoBehaviour
 
                     if (detectsthief == true && captured == false)
                     {
-
-
-                        if (TriggeredCheck.Triggered) {
-                            
+                        if (TriggeredCheck.Triggered) 
+                        {
+                           
                             myState = EnemyEnumState.chasing;
                             // trigger bool needs to go here
                         }
                     }
-                    //case 1 code goes here
+                    //case 2 code goes here
+                    myState = EnemyEnumState.chasing;
                     break;
                 }
             case EnemyEnumState.chasing:
                 {
                     //chasing
+                    Debug.Log("Is chasing");
                     if (detectsthief == false && captured == false)
                     {
                         myState = EnemyEnumState.guarding;
