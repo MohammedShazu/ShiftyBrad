@@ -72,9 +72,9 @@ public class EnemyBehave : MonoBehaviour
                     {
                         myState = EnemyEnumState.captured;
                     }
-                     
-                      //checking to see if player is in enemy's radar, if not then it'll go back to guarding
-                      if (volumeToMonitor.Triggered == false)
+
+                    //checking to see if player is in enemy's radar, if not then it'll go back to guarding
+                    //if (volumeToMonitor.Triggered == false)
                     {
                         myState = EnemyEnumState.guarding;
                     }
@@ -85,7 +85,6 @@ public class EnemyBehave : MonoBehaviour
                 {
                     Debug.Log("Game Over!!!!");
                     break;
-
                 }
             //always need to add default at the end of every case
             default:

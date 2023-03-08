@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")); //whenever I'm going horizontally, wertically is not coming into play and vice versa
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")); //whenever I'm going horizontally, vertically is not coming into play and vice versa
         controller.Move(move * Time.deltaTime * playerSpeed); //define speed of player
     }
 
