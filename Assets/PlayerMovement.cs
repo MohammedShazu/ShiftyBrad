@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontal;
     float vertical;
     float speed = 0.5f;
+    public bool isHidden;
 
 
     void Start()

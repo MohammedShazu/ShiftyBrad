@@ -1,97 +1,136 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using System.Collections;
 
 public class EnemyBehave : MonoBehaviour
 {
-
-    public enum EnemyEnumState { guarding, chasing, captured } //declaring all states that a guard can do
-    public EnemyEnumState myState = EnemyEnumState.guarding;
-
-    //can't detect thief normally, so captured and detects thief is defaulted a false 
-    public Transform Target;
-    public bool detectsthief = false;
-    public bool captured = false;
-    public GameObject Player;
-    public float speed = 1;
-    //call detection script
-    public Detection script;
-    bool chasePlayer;
-    private Detection TriggeredCheck; //referring to the Detection script in order for me to be able to access the boolean
-    public GameObject boolTracker;
-    public Detection volumeToMonitor; //added on for enemy chasing part
-
-    private void Start()
+    public bool GetIsPlayerDetected()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
-        volumeToMonitor = GetComponent<Detection>();
-
-        // myScript = GetComponent<Detection>();
-        TriggeredCheck = boolTracker.GetComponent<Detection>();
+        return isPlayerDetected;
     }
-    private void Update()
+    public float detectionRadius = 10.0f;
+    public Material detectedMaterial;
+    public bool isPlayerDetected = false;
+    private Material originalMaterial;
+    private GameObject player;
+    public float moveSpeed = 2.0f;
+    public float captureRadius = 2.0f;
+    public Transform[] waypoints;
+    public float waitTime = 2.0f;
+    private Renderer sensorRenderer;
+    private int currentWaypoint = 0;
+    private float waitTimer = 0.0f;
+    private Animator anim;
+    private Color defaultSensorColor;
+
+    public enum GuardState
     {
-        switch (myState)
+        Patrol,
+        Chase,
+        Capture
+    }
+
+    public GuardState currentState;
+
+    void Start()
+    {
         {
-            case EnemyEnumState.guarding:
-                //guarding
-                {
-                    Debug.Log("Triggered bool read");//added this line a few more times to figure out where I was supposed to put this
+            {
+                sensorRenderer = GetComponent<Renderer>();
+            }
+            // Get the sensor material
+            var sensorMaterial = transform.Find("Sensor").GetComponent<Renderer>().material;
 
-                    if (detectsthief == true && captured == false)
-                    {
-                        if (TriggeredCheck.Triggered) 
-                        {
-                           
-                            myState = EnemyEnumState.chasing;
-                            // trigger bool needs to go here
-                        }
-                    }
-                    //case 2 code goes here
-                    myState = EnemyEnumState.chasing;
-                    break;
-                }
-            case EnemyEnumState.chasing:
-                {
-                    //chasing
-                    Debug.Log("Is chasing");
-                    if (detectsthief == false && captured == false)
-                    {
-                        myState = EnemyEnumState.guarding;
-                    }
-                    if (detectsthief == true && captured == false)
-                    {
-                        //set eyes on the player
-                        transform.LookAt(Player.transform.position);
-                        //start chasing the player
-                        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-                    }
-                    //checking to see if enemy is close enough to get captured
-                    if (Vector3.Distance(Player.transform.position, transform.position) > 2.0f)
-                    {
-                        myState = EnemyEnumState.captured;
-                    }
+            // Set the default color
+            sensorMaterial.color = defaultSensorColor;
+        }
+        {
+            originalMaterial = GetComponentInChildren<MeshRenderer>().material;
+        }
+        currentState = GuardState.Patrol;
+        anim = GetComponent<Animator>();
+        sensorRenderer = transform.Find("Sensor").GetComponent<Renderer>();
+    }
 
-                    //checking to see if player is in enemy's radar, if not then it'll go back to guarding
-                    //if (volumeToMonitor.Triggered == false)
-                    {
-                        myState = EnemyEnumState.guarding;
-                    }
-                    break;
-                }
-            case EnemyEnumState.captured:
-                //captured
+    void Update()
+    {
+        switch (currentState)
+        {
+            case GuardState.Patrol:
+                Patrol();
+                break;
+            case GuardState.Chase:
+                if (isPlayerDetected)
                 {
-                    Debug.Log("Game Over!!!!");
-                    break;
+                    Chase();
                 }
-            //always need to add default at the end of every case
-            default:
+                else
                 {
-                    break;
+                    currentState = GuardState.Patrol;
                 }
+                break;
+            case GuardState.Capture:
+                Capture();
+                break;
+        }
+    }
+
+
+    void Patrol()
+    {
+        anim.SetBool("isWalking", true);
+        if (waitTimer > waitTime)
+        {
+            if (Vector3.Distance(transform.position, waypoints[currentWaypoint].position) < 1.1f)
+            {
+                currentWaypoint = (currentWaypoint + 1) % waypoints.Length;
+            }
+            transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypoint].position, moveSpeed * Time.deltaTime);
+            transform.LookAt(waypoints[currentWaypoint]);
+        }
+        else
+        {
+            waitTimer += Time.deltaTime;
         }
 
+        // Detect thief
+        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
+        foreach (Collider col in colliders)
+        {
+            if (col.gameObject.CompareTag("Player") && col.gameObject.GetComponent<PlayerMovement>().isHidden == false)
+            {
+                isPlayerDetected = true;
+                currentState = GuardState.Chase;
+                player = col.gameObject;
+                sensorRenderer.material.color = Color.red;
+                break;
+            }
+            else
+            {
+                currentState = GuardState.Capture;
+            }
+        }
+    }
+
+    void Chase()
+    {
+        anim.SetBool("isWalking", true);
+        if (Vector3.Distance(transform.position, player.transform.position) > captureRadius)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
+            transform.LookAt(player.transform);
+        }
+        else
+        {
+            currentState = GuardState.Capture;
+        }
+    }
+
+    void Capture()
+    {
+        anim.SetBool("isWalking", false);
+        anim.SetTrigger("capture");
+        Debug.Log("Game Over");
+        //Destroy(player);
+        currentState = GuardState.Patrol;
     }
 }

@@ -7,19 +7,26 @@ public class Bot : MonoBehaviour
 {
     NavMeshAgent agent;
     public GameObject target;
+    public EnemyBehave enemy;
+
+
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
     }
 
-    void Seek(Vector3 location)
+    private void Seek(Vector3 location)
     {
         agent.SetDestination(location);
     }
+
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Seek(target.transform.position);
+        if (enemy.isPlayerDetected)
+        {
+            Seek(target.transform.position);
+        }
     }
 }
