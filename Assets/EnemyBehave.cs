@@ -33,20 +33,17 @@ public class EnemyBehave : MonoBehaviour
 
     void Start()
     {
-        {
-            {
-                sensorRenderer = GetComponent<Renderer>();
-            }
-            // Get the sensor material
-            var sensorMaterial = transform.Find("Sensor").GetComponent<Renderer>().material;
+        sensorRenderer = GetComponent<Renderer>();
+        // Get the sensor material
+        var sensorMaterial = transform.Find("Sensor").GetComponent<Renderer>().material;
 
-            // Set the default color
-            sensorMaterial.color = defaultSensorColor;
-        }
-        {
-            originalMaterial = GetComponentInChildren<MeshRenderer>().material;
-        }
+        // Set the default color
+        sensorMaterial.color = defaultSensorColor;
+
+        originalMaterial = GetComponentInChildren<MeshRenderer>().material;
+
         currentState = GuardState.Patrol;
+
         anim = GetComponent<Animator>();
         sensorRenderer = transform.Find("Sensor").GetComponent<Renderer>();
     }
@@ -106,7 +103,12 @@ public class EnemyBehave : MonoBehaviour
             }
             else
             {
-                currentState = GuardState.Capture;
+                if (col.gameObject.CompareTag("Player") && col.gameObject.GetComponent<PlayerMovement>().isHidden == false)
+                {
+
+
+                    currentState = GuardState.Capture;
+                }
             }
         }
     }
@@ -129,7 +131,10 @@ public class EnemyBehave : MonoBehaviour
     {
         anim.SetBool("isWalking", false);
         anim.SetTrigger("capture");
-        Debug.Log("Game Over");
+        if (currentState == GuardState.Capture) // check if currentState is Capture
+        {
+            Debug.Log("Game Over");
+        }
         //Destroy(player);
         currentState = GuardState.Patrol;
     }
