@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 92
+  controlID: 91
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 93
+  controlID: 92
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 94
+  controlID: 93
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -215,8 +215,8 @@ MonoBehaviour:
     y: 0
     width: 1128
     height: 577
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -349,23 +349,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: 8eb80000
       m_LastClickedID: 0
-      m_ExpandedIDs: 1afbffff
+      m_ExpandedIDs: 76faffff1afbfffffa5b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Cash
+        m_OriginalName: Cash
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: -28276
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 4
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 8}
       m_SearchString: 
@@ -600,9 +600,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.4635959, y: 8.331889, z: 4.3322678}
+    m_Target: {x: 1.6807988, y: 6.077608, z: 2.3537755}
     speed: 2
-    m_Value: {x: 3.4635959, y: 8.331889, z: 4.3322678}
+    m_Value: {x: 1.6807988, y: 6.077608, z: 2.3537755}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -649,13 +649,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.5115769, y: -0.029010726, z: 0.017534394, w: -0.858686}
+    m_Target: {x: 0.0026276673, y: -0.9071018, z: 0.0040809684, w: 0.42123014}
     speed: 2
-    m_Value: {x: -0.5115254, y: -0.029007804, z: 0.017532628, w: -0.8585995}
+    m_Value: {x: 0.0026272836, y: -0.90696937, z: 0.0040803724, w: 0.42116863}
   m_Size:
-    m_Target: 2.1799326
+    m_Target: 2.2596335
     speed: 2
-    m_Value: 2.1799326
+    m_Value: 2.2596335
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -813,22 +813,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Plugins/FMOD
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/Plugins/FMOD
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Mohammed\Documents\GitHub\ShiftyBrad
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 565e0000
-    m_LastClickedID: 24150
-    m_ExpandedIDs: 000000004e5e0000505e0000525e0000545e0000565e000000ca9a3b
+    m_SelectedIDs: 8eb80000
+    m_LastClickedID: 47246
+    m_ExpandedIDs: 000000004e5e0000505e0000525e0000545e0000565e0000645e00008ab8000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -844,7 +844,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 10}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}

@@ -101,6 +101,14 @@ public class EnemyBehave : MonoBehaviour
                 sensorRenderer.material.color = Color.red;
                 break;
             }
+            if (col.gameObject.CompareTag("Player") && col.gameObject.GetComponent<PlayerMovement>().isHidden == true)
+            {
+                isPlayerDetected = true;
+                currentState = GuardState.Patrol;
+                player = col.gameObject;
+                sensorRenderer.material.color = Color.red;
+                break;
+            }
             else
             {
                 if (col.gameObject.CompareTag("Player") && col.gameObject.GetComponent<PlayerMovement>().isHidden == false)
@@ -120,6 +128,10 @@ public class EnemyBehave : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
             transform.LookAt(player.transform);
+        }
+        if (Vector3.Distance(transform.position, player.transform.position) < captureRadius)
+        {
+            currentState = GuardState.Patrol;
         }
         else
         {
