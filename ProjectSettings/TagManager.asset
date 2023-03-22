@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Detection
   - waypoints
+  - Cash
+  - exitDoor
   layers:
   - Default
   - TransparentFX

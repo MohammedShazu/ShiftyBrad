@@ -113,8 +113,7 @@ public class EnemyBehave : MonoBehaviour
             {
                 if (col.gameObject.CompareTag("Player") && col.gameObject.GetComponent<PlayerMovement>().isHidden == false)
                 {
-
-
+                    
                     currentState = GuardState.Capture;
                 }
             }
@@ -129,16 +128,24 @@ public class EnemyBehave : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
             transform.LookAt(player.transform);
         }
-        if (Vector3.Distance(transform.position, player.transform.position) < captureRadius)
-        {
-            currentState = GuardState.Patrol;
-        }
         else
         {
             currentState = GuardState.Capture;
         }
-    }
 
+        // Check if player is far away
+        if (Vector3.Distance(transform.position, player.transform.position) > detectionRadius)
+        {
+            currentState = GuardState.Patrol;
+        }
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            currentState = GuardState.Capture;
+        }
+    }
     void Capture()
     {
         anim.SetBool("isWalking", false);
