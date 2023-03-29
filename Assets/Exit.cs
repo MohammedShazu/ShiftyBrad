@@ -8,7 +8,15 @@ public class Exit : MonoBehaviour
     public int requiredCashAmount;
     public GameObject exitDoor;
     private int collectedCashAmount;
+    private CashPick CashPickInstance;
 
+    private void Start()
+    {
+        CashPick cashPick = Cash;
+        CashPickInstance = FindObjectOfType<CashPick>();
+        CashPickInstance.Cash = 10000;
+        Debug.Log("CashPick.cash");
+    }
     void OnTriggerEnter(Collider other)
     {
         requiredCashAmount = 160000;
