@@ -6,6 +6,11 @@ public class CashPick : MonoBehaviour
 {
     //storing collecting cash
     public int Cash;
+    public GameObject doorToDestroy;
+    public GameObject doorToDestroy2;
+    public GameObject doorToDestroy3;
+    public GameObject doorToDestroy4;
+    public AudioClip pickupSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +20,7 @@ public class CashPick : MonoBehaviour
     {
         if (col.gameObject.tag == "Cash")
         {
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position);
             Debug.Log("Cash Picked Up");
             Cash = Cash + 10000;
             //col.gameObject.SetActive(false);
@@ -24,6 +30,10 @@ public class CashPick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(Cash >= 160000)
+        {
+            Destroy(doorToDestroy);
+            Destroy(doorToDestroy2);
+        }
     }
 }

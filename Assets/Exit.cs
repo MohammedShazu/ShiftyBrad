@@ -4,29 +4,33 @@ using UnityEngine;
 
 public class Exit : MonoBehaviour
 {
-    [SerializeField] CashPick Cash;
-    public int requiredCashAmount;
+    [SerializeField] CashPick CashPickInstance;
+    public int requiredCashAmount = 170000;
     public GameObject exitDoor;
-    private int collectedCashAmount;
-    private CashPick CashPickInstance;
+    private int collectedCashAmount = 0;
+    public int Cash;
 
     private void Start()
     {
-        CashPick cashPick = Cash;
         CashPickInstance = FindObjectOfType<CashPick>();
-        CashPickInstance.Cash = 10000;
-        Debug.Log("CashPick.cash");
+        Debug.Log("Starting Cash Amount: " + CashPickInstance.Cash);
     }
+
     void OnTriggerEnter(Collider other)
     {
-        requiredCashAmount = 160000;
+        Debug.Log("OnTriggerEnter called");
+
         if (other.CompareTag("Cash"))
         {
             collectedCashAmount++;
             Destroy(other.gameObject);
 
+            Debug.Log("Collected cash amount: " + collectedCashAmount);
+            Debug.Log("Required cash amount: " + requiredCashAmount);
+
             if (collectedCashAmount == requiredCashAmount)
             {
+                Debug.Log("Destroying exit door");
                 Destroy(exitDoor);
             }
         }
